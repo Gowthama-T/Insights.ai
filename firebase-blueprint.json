@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Enterprise user profile and organization credentials",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "description": "Corporate email address" },
+        "displayName": { "type": "string", "description": "Full legal or professional name" },
+        "jobRole": { "type": "string", "description": "Business or executive role" },
+        "companyName": { "type": "string", "description": "Enterprise organization or tenant" },
+        "cloudRegion": { "type": "string", "description": "Selected data residency cloud region" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" }
+      },
+      "required": ["email", "displayName"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "Copilot analytical reasoning sessions for an enterprise user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the session owner" },
+        "title": { "type": "string", "description": "Conversation summary title" },
+        "model": { "type": "string", "description": "Reasoning model chosen (e.g. GPT-4o Ops)" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last message timestamp" }
+      },
+      "required": ["userId", "title"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Individual message in a Copilot chat session",
+      "type": "object",
+      "properties": {
+        "sender": { "type": "string", "enum": ["user", "assistant"], "description": "Message sender role" },
+        "text": { "type": "string", "description": "Message prompt or markdown text" },
+        "timestamp": { "type": "string", "description": "Formatted time display" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["sender", "text"]
+    },
+    "CustomDataSource": {
+      "title": "CustomDataSource",
+      "description": "User connected operational databases and cloud warehouses",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the source owner" },
+        "name": { "type": "string", "description": "Database or connector name" },
+        "category": { "type": "string", "description": "Databases, warehouses, files, or saas" },
+        "host": { "type": "string", "description": "Host address or endpoint" },
+        "status": { "type": "string", "description": "Connected or pending" },
+        "connectedAt": { "type": "string", "format": "date-time", "description": "Connection timestamp" }
+      },
+      "required": ["userId", "name", "category"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document indexed by Firebase Auth UID"
+    },
+    "/users/{userId}/chatSessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Copilot reasoning sessions for the user"
+    },
+    "/users/{userId}/chatSessions/{sessionId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages inside a user's Copilot reasoning session"
+    },
+    "/users/{userId}/customDataSources/{sourceId}": {
+      "schema": "CustomDataSource",
+      "description": "Connected enterprise data source configurations for this user"
+    }
+  }
+}

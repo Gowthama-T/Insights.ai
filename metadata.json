@@ -1,0 +1,6 @@
+{
+  "name": "InsightAI - Enterprise Analytics Copilot",
+  "description": "Enterprise AI analytics platform for turning business data into strategic decisions with autonomous querying, diagnostic drill-downs, and conversational insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
